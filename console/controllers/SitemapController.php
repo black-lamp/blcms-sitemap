@@ -1,5 +1,5 @@
 <?php
-namespace console\controllers;
+namespace bl\cms\sitemap\console\controllers;
 
 use bl\articles\common\entities\Article;
 use bl\articles\common\entities\Category;
