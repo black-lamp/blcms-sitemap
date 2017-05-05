@@ -33,10 +33,18 @@ class SitemapController extends Controller
                 }
             }
 
-            $categories = Category::findAll(['show' => true]);
+            $categories = Category::find()->where(['show' => true])->all();
 
             if(!empty($categories)) {
                 foreach ($categories as $category) {
+                    if(!empty($category->parent)) {
+                        if(!$category->parent->show) {
+                            continue;
+                        }
+                    }
+                    if($category->show) {
+                        continue;
+                    }
                     $siteMapFile->writeUrl(['/articles/category/index', 'id' => $category->id, 'language' => $language->lang_id]);
                 }
             }
@@ -49,19 +57,32 @@ class SitemapController extends Controller
                 }
             }
 
-            $products = Product::find()->all();
-
+            /* @var Product[] $products */
+            $products = Product::find()
+                ->joinWith('category category')
+                ->where([
+                    'shop_product.show' => true,
+                    'category.show' => true
+                ])->all();
             if(!empty($products)) {
                 foreach ($products as $product) {
                     $siteMapFile->writeUrl(['/shop/product/show', 'id' => $product->id, 'language' => $language->lang_id]);
                 }
             }
 
-            $productCategories = \bl\cms\shop\common\entities\Category::find()->all();
-
+            /* @var \bl\cms\shop\common\entities\Category[] $productCategories */
+            $productCategories = \bl\cms\shop\common\entities\Category::find()->where(['show' => true])->all();
             if(!empty($productCategories)) {
                 $siteMapFile->writeUrl(['/shop/category/show', 'language' => $language->lang_id]);
                 foreach ($productCategories as $productCategory) {
+                    if(!empty($productCategory->parent)) {
+                        if(!$productCategory->parent->show) {
+                            continue;
+                        }
+                    }
+                    if($productCategory->show) {
+                        continue;
+                    }
                     $siteMapFile->writeUrl(['/shop/category/show', 'id' => $productCategory->id, 'language' => $language->lang_id]);
                 }
             }
