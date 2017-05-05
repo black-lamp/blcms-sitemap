@@ -5,9 +5,9 @@ use bl\articles\common\entities\Article;
 use bl\articles\common\entities\Category;
 use bl\cms\gallery\models\entities\GalleryAlbum;
 use bl\cms\shop\common\entities\Product;
+use bl\cms\sitemap\common\SitemapFile;
 use bl\multilang\entities\Language;
 use yii\console\Controller;
-use yii2tech\sitemap\File;
 
 /**
  * @author Gutsulyak Vadim <guts.vadim@gmail.com>
@@ -16,7 +16,7 @@ class SitemapController extends Controller
 {
     // TODO: remove priority
     public function actionGenerate() {
-        $siteMapFile = new File();
+        $siteMapFile = new SitemapFile();
         $siteMapFile->fileBasePath = '@frontend/web';
         $languages = Language::findAll(['show' => true]);
 
