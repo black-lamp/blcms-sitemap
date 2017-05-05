@@ -1,0 +1,21 @@
+{
+  "name": "black-lamp/blcms-sitemap",
+  "description": "Sitemap generation extension for Black-Lamp CMS",
+  "keywords": ["black-lamp", "cms", "yii2", "sitemap", "generation"],
+  "type": "yii2-extension",
+  "authors": [
+    {
+      "name": "Gutsulyak Vadim",
+      "email": "guts.vadim@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": ">=2.0.4",
+    "yii2tech/sitemap": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "bl\\cms\\sitemap\\": ""
+    }
+  }
+}
